@@ -19,6 +19,9 @@
 # build products
 src/**/*.css
 
+/.idea
+.idea
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
