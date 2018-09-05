@@ -3,6 +3,7 @@
  */
 
 import React, { Component } from 'react';
+import Styles from './User.less';
 
 class User extends Component {
   state = {};
@@ -14,7 +15,7 @@ class User extends Component {
   }
 
   render() {
-    return <div>hello world</div>;
+    return <div className={Styles.body}>hello world!!!!</div>;
   }
 }
 
