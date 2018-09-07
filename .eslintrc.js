@@ -33,6 +33,7 @@ module.exports = {
     "no-cond-assign": [0],
     "import/no-unresolved": [0],
     "require-yield": [1],
+    "no-unused-vars":[1],
     "no-empty": [1],
     "valid-jsdoc": [1],
     "max-len": [2, 120, 2, {

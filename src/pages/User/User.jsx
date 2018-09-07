@@ -17,15 +17,10 @@ import Styles from './User.less';
 class User extends Component {
   state = {};
 
-  componentDidMount() {
-    console.info('this.props', this.props);
-  }
+  componentDidMount() {}
 
   incrementevent = e => {
-    console.info('incrementevent', e);
-    console.info('this.props', this.props);
     const { getData: getD } = this.props;
-    console.info('getData', getD);
     getD();
   };
 

@@ -1,12 +1,11 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory';
-import rootReducer from './modules';
+import rootReducer from '../modules';
 
 export const history = createHistory();
 
-const initialState = {};
 const enhancers = [];
 const middleware = [thunk, routerMiddleware(history)];
 
@@ -24,10 +23,21 @@ const composedEnhancers = compose(
   ...enhancers
 );
 
-const store = createStore(
-  connectRouter(history)(rootReducer),
-  initialState,
-  composedEnhancers
-);
+export default function configureStore(initialState) {
+  const store = createStore(
+    connectRouter(history)(rootReducer),
+    initialState,
+    composedEnhancers
+  );
 
-export default store;
+  if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept(() => {
+      // eslint-disable-next-line
+      const nextRootReducer = combineReducers(require('../modules'));
+      store.replaceReducer(nextRootReducer);
+    });
+  }
+
+  return store;
+}
