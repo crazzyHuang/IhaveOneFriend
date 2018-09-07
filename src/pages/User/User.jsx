@@ -3,20 +3,65 @@
  */
 
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import {
+  increment,
+  incrementAsync,
+  decrement,
+  decrementAsync,
+  getData,
+} from '../../modules/counter';
 import Styles from './User.less';
 
 class User extends Component {
   state = {};
 
-  componentWillMount() {}
-
   componentDidMount() {
     console.info('this.props', this.props);
   }
 
+  incrementevent = e => {
+    console.info('incrementevent', e);
+    console.info('this.props', this.props);
+    const { getData: getD } = this.props;
+    console.info('getData', getD);
+    getD();
+  };
+
   render() {
-    return <div className={Styles.body}>hello world!!!!</div>;
+    const { count } = this.props;
+    return (
+      <div className={Styles.body}>
+        hello world!!!!
+        <div>
+          <span>{count}</span>
+        </div>
+        <input type="button" value="click" onClick={this.incrementevent} />
+      </div>
+    );
   }
 }
 
-export default User;
+const mapStateToProps = ({ counter }) => ({
+  count: counter.count,
+  isIncrementing: counter.isIncrementing,
+  isDecrementing: counter.isDecrementing,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      increment,
+      incrementAsync,
+      decrement,
+      decrementAsync,
+      getData,
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(User);
